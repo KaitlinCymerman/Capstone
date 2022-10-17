@@ -1,0 +1,70 @@
+{% extends "movies/layout.html" %}
+
+{% load static %}
+
+{% block script %}
+    <script src="{% static 'movies/edit.js' %}"></script>
+{% endblock %}
+
+<link href="{% static 'movies/styles.css' %}" rel="stylesheet">
+
+{% block body %}
+
+    <br>
+    <div class="ml-3" style="display: inline;">
+        <label>Haven't watched yet? Add it to your list and let us know what you think later!</label>
+        {% if user.is_authenticated%}
+            {% if isMovie_InWatchList %}
+                <div style="padding-left:10px;">
+                    <a class="btn btn-danger" href="{% url 'remove' movies.id %}">Remove from my Watchlist</a>
+                </div>
+            {% else %}
+                <div style="padding-left:10px;">
+                    <a class="btn btn-success" href="{% url 'add' movies.id %}">Add to my Watchlist</a>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+
+    <h4 align="center"><span><strong>{{ movies.title }} ({{movies.year}})</strong></span></h4> <br>
+        <div class="movie-container container" align="center">
+            <img class="card-imp-top" style="width: 400px" src="{{ movies.image | safe }}" alt="{{ movies.title }}">
+        </div>
+
+            <div class="movie-info">
+                <div class="mi-upper" align="center">
+                    <br>
+                    <span>{{movies.about}}</span>
+                    <br>
+                    <br>
+                </div>
+            </div>
+
+        </div>
+
+    <div class="card p-3">
+        {% if user.is_authenticated %}
+            <form action="{% url 'add_review' movies.id %}" method="POST">
+                {% csrf_token %}
+                <div class="border border-dark rounded p-4">
+                    <h5 class="mx-2">Share a review and rating:</h5>
+                    <textarea class="form-control mb-2" id="new_reviews" name="new_reviews" placeholder="Share your thoughts..."></textarea>
+                    <input class="form-control mb-2" type="number" id="rating" name="rating" min="0" max="10" autocomplete="off" placeholder="Rating (0-10)">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        {% endif %}
+
+            {% for review in allreviews %}
+            <div class="border border-dark rounded p-4 mt-2">
+                <p><a href="{% url 'profile' review.author %}">{{ review.author }}</a></p>
+                <p class="mt-n3">{{ review.review }}</p>
+                <p class="mt-n3">Rating: {{ review.rating }}</p>
+                <p class="mt-n3">{{ review.timestamp }}</p>
+
+            </div>
+            {% endfor %}
+        </div>
+{% endblock %}
+

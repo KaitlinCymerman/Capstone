@@ -1,0 +1,48 @@
+{% extends "movies/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+
+<script src="{% static 'movies/edit.js' %}"></script>
+
+    <div class="jumbotron text-center">
+        <h1><strong>Movie Lovers, Welcome!</strong></h1>
+        <br>
+        <p class="lead" align="center">Review and Rate your favorite movies and even comment on some new releases!</p>
+        <p class="lead" align="center">Movies affect many of us powerfully because the combined impact of images, music, dialogue, lighting, sound and special effects can provoke deep feelings within us. Movies can help us to better understand our own lives, the lives of those around us, and even how our society operates. <br><br> Share your opinions now!</p>
+    </div>
+
+    <div class="row mx-2 p-5">
+        {% for movie in page_obj %}
+            <div class="card mx-3" style="width: 18rem;" align="center">
+                <img class="card-img-top" src="{{ movie.image }}" alt="{{ movie.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <a href="{% url 'movie' movie.id %}" class="btn btn-primary">View</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+    <div class="pagination mx-5">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a class="p-2" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+                <a class="p-2" href="?page={{ page_obj.next_page_number }}">Next</a>
+            {% endif %}
+
+        </span>
+    </div>
+
+    <br>
+
+{% endblock %}

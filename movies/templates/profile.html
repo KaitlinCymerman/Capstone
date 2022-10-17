@@ -1,0 +1,48 @@
+{% extends "movies/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+
+<script src="{% static 'movies/edit.js' %}"></script>
+<link href="{% static 'movies/styles.css' %}" rel="stylesheet">
+
+
+    <div class="card p-4">
+        <div>
+            <h2 class="ml-3" style="display: inline;">{{ requested_user.username }}</h2>
+        </div>
+    </div>
+    <br>
+    {% if user.is_authenticated %}
+        <span class="pr-title ml-3" style="display: inline;"><a class="link" href="{% url 'watchlist' %}"><strong>View my WatchList :)</strong></a></span>
+    {% endif %}
+    <br>
+    <div class="profile-reviews ml-3">
+        <br>
+        <p class="lead" style="display: inline;">Most recent reviews:</p>
+        {% for review in reviews %}
+            <div>
+                <br>
+                <span class="pr-title"><a class="link" href="{% url 'movie' review.movie.id %}"><strong>{{review.movie.title}} ({{review.movie.year}})</strong></a>: {{ review.review }}</span>
+
+            </div>
+        {% empty %}
+            <div class="pr-item mx-2">
+                No reviews yet.
+            </div>
+        {% endfor %}
+        <br>
+        <hr style="margin-top: 0; width: 300px; min-width: 190px;" align="left">
+        <div>
+            <a class="link" href="{% url 'user_reviews' requested_user.username %}">See all reviews</a>
+        </div>
+        <br>
+        <br>
+        <br>
+
+    </div>
+
+
+{% endblock %}
+

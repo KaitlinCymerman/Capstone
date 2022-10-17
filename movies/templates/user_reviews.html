@@ -1,0 +1,31 @@
+{% extends "movies/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+
+<script src="{% static 'movies/edit.js' %}"></script>
+
+<h4><span class="">All reviews from: <a class="link" href="{% url 'profile' requested_user.username %}"><strong>{{requested_user.username}}</strong></a></span></h4>
+    <div>
+        {% for review in reviews %}
+            <div class="border border-dark rounded p-2 mt-2">
+                <a class="link" href="{% url 'movie' review.movie.id %}"><strong>{{review.movie.title}} ({{review.movie.year}})</strong></a>:
+                <div id="review-{{review.id}}" class="row m-2">{{ review.review}}</div>
+                <p class="row m-2">Rating: {{ review.rating }}</p>
+                <div class="row m-2">{{ review.timestamp }}</div>
+
+            {% if user.is_authenticated %}
+                {% if review.username.id == username.id  %}
+                    <button class="btn btn-primary m-2" id="edit" onclick="edit('{{ review.id }}')" >Edit</button>
+                {% else %}
+                {% endif %}
+                <textarea class="form-control" style="display:none;" name="edit-review" id="edit-review-{{ review.id }}" ></textarea>
+                <button type="submit" id="edit-btn-{{ review.id }}" class="btn btn-primary m-2" style="display:none;">Save</button>
+            {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "movies/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    <br>
+    <h3 class="ml-3" style="display: inline;">Movie Watchlist:</h3>
+    <br>
+    <br>
+
+    <div class="row mx-2">
+        {% for movie in movies %}
+            <div class="card mx-3" style="width: 18rem;">
+                <img class="card-img-top" src="{{ movie.image }}" alt="{{ movie.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <p class="card-text">{{ movie.about }}</p>
+                    <a href="{% url 'movie' movie.id %}" class="btn btn-primary">Select</a>
+                </div>
+            </div>
+        {% empty %}
+            <h6 class="ml-3">Nothing in your movie watchlist yet... :( <br>
+                Add some movies! </h6>
+        {% endfor %}
+    </div>
+    <br>
+
+{% endblock %}
