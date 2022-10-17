@@ -1,0 +1,35 @@
+
+.link {
+    text-decoration: none;
+    color:rgb(25, 147, 234);
+}
+
+.link:hover {
+    text-decoration: underline;
+    color: black;
+}
+
+.nav-item:hover {
+    font-weight:bold;
+    text-decoration: underline;
+    color: black;
+}
+
+.text-center{
+    font-family:Verdana;
+    font-weight:bold;
+    color: white;
+}
+
+.jumbotron {
+    background: black;
+}
+
+.card-title {
+    font-family:Verdana;
+    font-weight:bold;
+}
+
+.lead {
+    font-weight:bold;
+}
