@@ -1,0 +1,42 @@
+{% extends "movies/layout.html" %}
+
+{% load static %}
+
+{% block script %}
+    <script src="{% static 'movies/edit.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+
+    <br>
+    <p class="lead" align="center">Don't see a movie on here? Feel free to add it!</p>
+    <hr style="margin-top: 0; width: 300px; min-width: 190px;" align="center">
+    <br>
+        <div class="container">
+            <p class="lead">Add new movie:</p>
+            <form action="{% url 'add_movie' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="title"></label>
+                    <input type="text" name="title" class="form-control" autocomplete="off" placeholder="Title"><br>
+                </div>
+                <div class="form-group">
+                    <label for="year"></label>
+                    <input type="number" name="year" class="form-control" autocomplete="off" placeholder="Year"><br>
+                </div>
+                <div class="form-group">
+                    <label for="image"></label>
+                    <input type="url" name="image" class="form-control" id="image" placeholder="URL">
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="about"></label>
+                    <textarea name="about" rows="6" cols="60" class="form-control" placeholder="About"></textarea>
+                </div>
+                <input class="btn btn-primary" type="submit">
+            </form>
+        </div>
+
+
+{% endblock %}
+
